@@ -1,0 +1,375 @@
+{
+    "questions": {
+        "Q1": {
+            "text": "Jaki jest główny objaw problemu z samochodem?",
+            "answers": [
+                "nie_odpala",
+                "dziwne_dzwieki",
+                "utrata_mocy",
+                "problem_z_hamulcami",
+                "przegrzewanie",
+                "wibracje",
+                "wyciek_plynu",
+                "problem_z_elektryka"
+            ]
+        },
+        "Q2": {
+            "text": "Czy na desce rozdzielczej świeci się jakaś kontrolka?",
+            "answers": [
+                "check_engine",
+                "akumulator",
+                "olej",
+                "temperatura",
+                "abs",
+                "brak_kontrolki"
+            ]
+        },
+        "Q3": {
+            "text": "Kiedy problem się pojawia?",
+            "answers": [
+                "przy_rozruchu",
+                "podczas_jazdy",
+                "przy_hamowaniu",
+                "na_postoju",
+                "zawsze"
+            ]
+        },
+        "Q4": {
+            "text": "Jaki jest przebieg samochodu (w km)?",
+            "answers": [
+                "ponizej_50000",
+                "50000_150000",
+                "150000_300000",
+                "powyzej_300000"
+            ]
+        },
+        "Q5": {
+            "text": "Czy problem pojawił się nagle czy narastał stopniowo?",
+            "answers": [
+                "nagle",
+                "stopniowo"
+            ]
+        },
+        "Q6": {
+            "text": "Jaki rodzaj dźwięku słyszysz (jeśli dotyczy)?",
+            "answers": [
+                "stukanie",
+                "piszczenie",
+                "szum",
+                "klekotanie",
+                "brak_dzwieku"
+            ]
+        },
+        "Q7": {
+            "text": "Czy zauważyłeś wyciek jakiegoś płynu pod samochodem?",
+            "answers": [
+                "olej",
+                "plyn_chlodniczy",
+                "plyn_hamulcowy",
+                "paliwo",
+                "brak_wycieku"
+            ]
+        },
+        "Q8": {
+            "text": "Czy samochód był ostatnio serwisowany lub naprawiany?",
+            "answers": [
+                "tak_ostatnio",
+                "dawno_temu",
+                "nigdy"
+            ]
+        },
+        "Q9": {
+            "text": "Jaki typ silnika posiada samochód?",
+            "answers": [
+                "benzyna",
+                "diesel",
+                "hybryda",
+                "elektryczny"
+            ]
+        },
+        "Q10": {
+            "text": "Czy problem występuje przy określonej temperaturze zewnętrznej?",
+            "answers": [
+                "na_mrozie",
+                "w_upale",
+                "niezaleznie_od_temperatury"
+            ]
+        },
+        "Q11": {
+            "text": "Jak zachowuje się skrzynia biegów?",
+            "answers": [
+                "szarpie_przy_zmianie",
+                "slyszalny_zgrzyt",
+                "bieg_wyskakuje",
+                "normalnie"
+            ]
+        },
+        "Q12": {
+            "text": "Czy występują problemy z kierownicą?",
+            "answers": [
+                "ciezka_kierownica",
+                "wibracje_kierownicy",
+                "sciaga_w_strone",
+                "brak_problemu"
+            ]
+        }
+    },
+    "rules": [
+        {
+            "id": "R1",
+            "if": {"Q1": "nie_odpala", "Q2": "akumulator", "Q10": "na_mrozie"},
+            "then": {
+                "diagnosis": "Rozładowany lub uszkodzony akumulator z powodu mrozu",
+                "action": "Naładuj akumulator prostownikiem lub wymień na nowy o odpowiedniej pojemności. Sprawdź napięcie ładowania alternatora."
+            }
+        },
+        {
+            "id": "R2",
+            "if": {"Q1": "nie_odpala", "Q2": "akumulator", "Q5": "nagle"},
+            "then": {
+                "diagnosis": "Nagłe uszkodzenie akumulatora lub alternatora",
+                "action": "Sprawdź klemy akumulatora pod kątem korozji. Przetestuj alternator. Wymień akumulator jeśli ma więcej niż 4 lata."
+            }
+        },
+        {
+            "id": "R3",
+            "if": {"Q1": "nie_odpala", "Q2": "check_engine", "Q9": "benzyna"},
+            "then": {
+                "diagnosis": "Problem z zapłonem lub wtryskiem paliwa (silnik benzynowy)",
+                "action": "Sprawdź świece zapłonowe, cewki zapłonowe i wtryskiwacze. Podłącz diagnostykę OBD2 aby odczytać kody błędów."
+            }
+        },
+        {
+            "id": "R4",
+            "if": {"Q1": "nie_odpala", "Q2": "check_engine", "Q9": "diesel"},
+            "then": {
+                "diagnosis": "Problem z układem wtryskowym lub świecami żarowymi (diesel)",
+                "action": "Sprawdź świece żarowe, pompowtryskiwacze/wtryskiwacze CR oraz filtr paliwa. Odczytaj kody błędów OBD2."
+            }
+        },
+        {
+            "id": "R5",
+            "if": {"Q1": "dziwne_dzwieki", "Q6": "stukanie", "Q3": "podczas_jazdy"},
+            "then": {
+                "diagnosis": "Zużyte łożyska kół lub przeguby napędowe",
+                "action": "Podnieś samochód i sprawdź luz na kołach. Zweryfikuj stan przegubów homokinetycznych i ich osłon."
+            }
+        },
+        {
+            "id": "R6",
+            "if": {"Q1": "dziwne_dzwieki", "Q6": "piszczenie", "Q3": "przy_hamowaniu"},
+            "then": {
+                "diagnosis": "Zużyte klocki hamulcowe",
+                "action": "Wymień klocki hamulcowe. Sprawdź grubość tarcz hamulcowych — jeśli poniżej minimum, wymień również tarcze."
+            }
+        },
+        {
+            "id": "R7",
+            "if": {"Q1": "dziwne_dzwieki", "Q6": "klekotanie", "Q4": "powyzej_300000"},
+            "then": {
+                "diagnosis": "Zużyty układ zawieszenia przy dużym przebiegu",
+                "action": "Wymień amortyzatory, tuleje wahacza i łączniki stabilizatora. Wykonaj pełną kontrolę zawieszenia na podnośniku."
+            }
+        },
+        {
+            "id": "R8",
+            "if": {"Q1": "utrata_mocy", "Q2": "check_engine", "Q5": "stopniowo"},
+            "then": {
+                "diagnosis": "Zatykający się filtr powietrza, DPF lub katalityczny",
+                "action": "Wymień filtr powietrza. Sprawdź stan filtra cząstek stałych (DPF) i katalizatora. Odczytaj kody błędów."
+            }
+        },
+        {
+            "id": "R9",
+            "if": {"Q1": "utrata_mocy", "Q9": "diesel", "Q4": "150000_300000"},
+            "then": {
+                "diagnosis": "Możliwe zapchanie filtra DPF lub zużycie turbosprężarki",
+                "action": "Wykonaj regenerację DPF. Sprawdź turbosprężarkę pod kątem luzów i wycieków oleju. Sprawdź ciśnienie doładowania."
+            }
+        },
+        {
+            "id": "R10",
+            "if": {"Q1": "utrata_mocy", "Q6": "szum", "Q3": "podczas_jazdy"},
+            "then": {
+                "diagnosis": "Uszkodzona turbosprężarka lub nieszczelność układu dolotowego",
+                "action": "Sprawdź turbosprężarkę, przewody intercoolera i wszystkie połączenia pod kątem nieszczelności. Nasłuchuj charakterystycznego gwizdania."
+            }
+        },
+        {
+            "id": "R11",
+            "if": {"Q1": "problem_z_hamulcami", "Q7": "plyn_hamulcowy", "Q5": "stopniowo"},
+            "then": {
+                "diagnosis": "Wyciek z układu hamulcowego — uszkodzona przewódka lub zacisk",
+                "action": "NATYCHMIAST przestań jeździć! Sprawdź wszystkie przewody hamulcowe, zaciski i cylinderek główny. Uzupełnij płyn i odpowietrz układ."
+            }
+        },
+        {
+            "id": "R12",
+            "if": {"Q1": "problem_z_hamulcami", "Q2": "abs", "Q12": "wibracje_kierownicy"},
+            "then": {
+                "diagnosis": "Uszkodzony czujnik ABS lub zdeformowane tarcze hamulcowe",
+                "action": "Sprawdź czujniki ABS na wszystkich kołach. Zmierz bicie tarcz hamulcowych — jeśli przekracza tolerancję, wymień tarcze."
+            }
+        },
+        {
+            "id": "R13",
+            "if": {"Q1": "problem_z_hamulcami", "Q6": "piszczenie", "Q4": "50000_150000"},
+            "then": {
+                "diagnosis": "Klocki hamulcowe osiągnęły limit zużycia",
+                "action": "Wymień klocki hamulcowe na osi, na której występuje piszczenie. Sprawdź tarcze — rozważ ich wymianę lub przetoczenie."
+            }
+        },
+        {
+            "id": "R14",
+            "if": {"Q1": "przegrzewanie", "Q2": "temperatura", "Q7": "plyn_chlodniczy"},
+            "then": {
+                "diagnosis": "Wyciek płynu chłodniczego — uszkodzony wąż, chłodnica lub uszczelka",
+                "action": "Zlokalizuj miejsce wycieku. Sprawdź węże, chłodnicę i pompę wody. Wymień uszkodzone elementy. NIE otwieraj zbiornika wyrównawczego na gorąco!"
+            }
+        },
+        {
+            "id": "R15",
+            "if": {"Q1": "przegrzewanie", "Q2": "temperatura", "Q5": "nagle"},
+            "then": {
+                "diagnosis": "Uszkodzona pompa wody lub zablokowany termostat",
+                "action": "Natychmiast zatrzymaj silnik! Sprawdź termostat i pompę wody. Zweryfikuj, czy wentylator chłodnicy się włącza."
+            }
+        },
+        {
+            "id": "R16",
+            "if": {"Q1": "przegrzewanie", "Q7": "brak_wycieku", "Q3": "podczas_jazdy"},
+            "then": {
+                "diagnosis": "Uszkodzony termostat lub niesprawny wentylator chłodnicy",
+                "action": "Sprawdź, czy termostat otwiera się w prawidłowej temperaturze. Zweryfikuj działanie wentylatora chłodnicy i jego bezpieczniki."
+            }
+        },
+        {
+            "id": "R17",
+            "if": {"Q1": "wibracje", "Q3": "podczas_jazdy", "Q12": "wibracje_kierownicy"},
+            "then": {
+                "diagnosis": "Niewyważone koła lub zdeformowana felga",
+                "action": "Wykonaj wyważenie kół. Sprawdź felgi pod kątem odkształceń. Zweryfikuj stan opon — nierównomierne zużycie wskazuje na problem z geometrią."
+            }
+        },
+        {
+            "id": "R18",
+            "if": {"Q1": "wibracje", "Q6": "stukanie", "Q4": "150000_300000"},
+            "then": {
+                "diagnosis": "Zużyte poduszki silnika lub skrzyni biegów",
+                "action": "Sprawdź poduszki silnika i skrzyni pod kątem pęknięć i odkształceń. Wymień zużyte elementy."
+            }
+        },
+        {
+            "id": "R19",
+            "if": {"Q1": "wibracje", "Q11": "szarpie_przy_zmianie", "Q5": "stopniowo"},
+            "then": {
+                "diagnosis": "Zużyte sprzęgło lub problem ze skrzynią biegów",
+                "action": "Sprawdź sprzęgło — jeśli ślizga się, wymień komplet (tarcza, docisk, łożysko). Przy automatycznej skrzyni — zmień olej i filtr."
+            }
+        },
+        {
+            "id": "R20",
+            "if": {"Q1": "wyciek_plynu", "Q7": "olej", "Q4": "powyzej_300000"},
+            "then": {
+                "diagnosis": "Zużyte uszczelki silnika przy dużym przebiegu",
+                "action": "Sprawdź uszczelkę pod głowicą, miskę olejową i uszczelniacz wału korbowego. Przy dużym przebiegu wymiana uszczelek jest typowa."
+            }
+        },
+        {
+            "id": "R21",
+            "if": {"Q1": "wyciek_plynu", "Q7": "paliwo", "Q5": "nagle"},
+            "then": {
+                "diagnosis": "Pęknięty przewód paliwowy lub uszkodzony wtryskiwacz",
+                "action": "NATYCHMIAST odłącz akumulator i nie uruchamiaj silnika! Wyciek paliwa to zagrożenie pożarem. Holuj do serwisu."
+            }
+        },
+        {
+            "id": "R22",
+            "if": {"Q1": "wyciek_plynu", "Q7": "plyn_chlodniczy", "Q8": "tak_ostatnio"},
+            "then": {
+                "diagnosis": "Niepoprawnie wykonany serwis — niedokręcone połączenie lub uszkodzony wąż",
+                "action": "Wróć do serwisu, który wykonywał naprawę. Sprawdź wszystkie ostatnio ruszane połączenia w układzie chłodzenia."
+            }
+        },
+        {
+            "id": "R23",
+            "if": {"Q1": "problem_z_elektryka", "Q2": "brak_kontrolki", "Q10": "na_mrozie"},
+            "then": {
+                "diagnosis": "Korozja instalacji elektrycznej lub osłabiony akumulator na mrozie",
+                "action": "Sprawdź masę silnika i styki akumulatora. Na mrozie akumulator traci do 50% pojemności. Oczyść zakorodowane połączenia."
+            }
+        },
+        {
+            "id": "R24",
+            "if": {"Q1": "problem_z_elektryka", "Q2": "akumulator", "Q8": "dawno_temu"},
+            "then": {
+                "diagnosis": "Stary akumulator lub uszkodzony alternator",
+                "action": "Zmierz napięcie akumulatora (powinno być >12.4V). Sprawdź napięcie ładowania alternatora (13.8–14.4V). Wymień zużyte elementy."
+            }
+        },
+        {
+            "id": "R25",
+            "if": {"Q1": "nie_odpala", "Q6": "stukanie", "Q3": "przy_rozruchu"},
+            "then": {
+                "diagnosis": "Uszkodzony rozrusznik — zębatka nie zazębia się prawidłowo",
+                "action": "Sprawdź rozrusznik — możliwe zużycie zębatki bendiksa lub wieńca zamachowego. Wymień rozrusznik."
+            }
+        },
+        {
+            "id": "R26",
+            "if": {"Q12": "sciaga_w_strone", "Q1": "problem_z_hamulcami", "Q3": "przy_hamowaniu"},
+            "then": {
+                "diagnosis": "Zacinający się zacisk hamulcowy na jednym kole",
+                "action": "Sprawdź zaciski hamulcowe na obu stronach osi. Wyczyść i nasmaruj prowadnice. Wymień zacinający się zacisk."
+            }
+        },
+        {
+            "id": "R27",
+            "if": {"Q12": "ciezka_kierownica", "Q7": "olej", "Q6": "szum"},
+            "then": {
+                "diagnosis": "Niski poziom oleju w układzie wspomagania kierownicy",
+                "action": "Uzupełnij olej wspomagania. Sprawdź pompę wspomagania i przewody pod kątem wycieków. Wymień uszkodzone elementy."
+            }
+        },
+        {
+            "id": "R28",
+            "if": {"Q11": "slyszalny_zgrzyt", "Q5": "stopniowo", "Q4": "150000_300000"},
+            "then": {
+                "diagnosis": "Zużyte synchronizatory w skrzyni biegów manualnej",
+                "action": "Zmień olej w skrzyni biegów na zalecany przez producenta. Jeśli zgrzyt nie ustąpi, konieczna regeneracja skrzyni."
+            }
+        },
+        {
+            "id": "R29",
+            "if": {"Q11": "bieg_wyskakuje", "Q4": "powyzej_300000", "Q5": "stopniowo"},
+            "then": {
+                "diagnosis": "Zużyty mechanizm zmiany biegów lub widełki w skrzyni",
+                "action": "Konieczna regeneracja lub wymiana skrzyni biegów. Tymczasowo sprawdź linkę/cięgło zmiany biegów."
+            }
+        },
+        {
+            "id": "R30",
+            "if": {"Q1": "utrata_mocy", "Q2": "check_engine", "Q9": "hybryda"},
+            "then": {
+                "diagnosis": "Problem z układem hybrydowym — możliwe uszkodzenie baterii trakcyjnej lub falownika",
+                "action": "Konieczna diagnostyka w autoryzowanym serwisie. Odczytaj kody błędów dedykowanym skanerem. Nie naprawiaj samodzielnie — wysokie napięcie!"
+            }
+        },
+        {
+            "id": "R31",
+            "if": {"Q1": "nie_odpala", "Q9": "elektryczny", "Q2": "akumulator"},
+            "then": {
+                "diagnosis": "Rozładowana bateria trakcyjna lub uszkodzony system ładowania",
+                "action": "Sprawdź stan naładowania baterii w systemie pojazdu. Zweryfikuj ładowarkę i port ładowania. Skontaktuj się z serwisem EV."
+            }
+        },
+        {
+            "id": "R32",
+            "if": {"Q1": "dziwne_dzwieki", "Q6": "klekotanie", "Q8": "tak_ostatnio"},
+            "then": {
+                "diagnosis": "Niedokręcony element po ostatnim serwisie — osłona termiczna, śruba podwozia",
+                "action": "Wróć do serwisu. Sprawdź osłony termiczne pod samochodem, śruby mocujące wydechu i podwozia."
+            }
+        }
+    ]
+}
